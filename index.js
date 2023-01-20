@@ -13,7 +13,7 @@ class Player {
     };
     this.height = 50;
   }
-
+//draw player
   draw() {
     ctx.fillStyle = "red";
     ctx.fillRect(this.position.x, this.position.y, 50, this.height);
@@ -32,6 +32,27 @@ const player = new Player({
   x: 0,
   y: 0,
 });
+//keys
+const keys = {
+  d: {
+    pressed: false,
+  },
+  a: {
+    pressed: false,
+  },
+  w: {
+    pressed: false,
+  },
+  arrowRight: {
+    pressed: false,
+  },
+  arrowLeft: {
+    pressed: false,
+  },
+  arrowUp: {
+    pressed: false,
+  },
+};
 
 //animate function
 function animate() {
@@ -43,30 +64,53 @@ function animate() {
 
   //player
   player.update();
+
+  player.velocity.x = 0;
+  if (keys.d.pressed || keys.arrowRight.pressed) player.velocity.x = 1;
+  else if (keys.a.pressed || keys.arrowLeft.pressed) player.velocity.x = -1;
 }
 
 animate();
-
+//movement tracker
 window.addEventListener("keydown", (event) => {
   switch (event.key) {
     // console.log(event);
-    case "d":
-      player.velocity.x = 2;
+    case "d": //right
+      keys.d.pressed = true;
       break;
-    case "a":
-      player.velocity.x = -2;
+    case "a": //left
+      keys.a.pressed = true;
       break;
-    case "w":
+    case "w": //up
       player.velocity.y = -15;
       break;
-    case "ArrowRight":
-      player.velocity.x = 2;
+    case "ArrowRight": //right
+      keys.arrowRight.pressed = true;
       break;
-    case "ArrowLeft":
-      player.velocity.x = -2;
+    case "ArrowLeft": //left
+      keys.arrowLeft.pressed = true;
       break;
-    case "ArrowUp":
+    case "ArrowUp": //up
       player.velocity.y = -15;
+      break;
+  }
+});
+
+window.addEventListener("keyup", (event) => {
+  switch (event.key) {
+    // console.log(event);
+    case "d": //right
+      keys.d.pressed = false;
+      break;
+    case "a": //left
+      keys.a.pressed = false;
+      break;
+    case "w": //up
+    case "ArrowRight": //right
+      keys.arrowRight.pressed = false;
+      break;
+    case "ArrowLeft": //left
+      keys.arrowLeft.pressed = false;
       break;
   }
 });
