@@ -1,3 +1,11 @@
 body{
-    background: rgb(80, 54, 54);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    margin: 0 auto;
+}
+canvas{
+    border: 1px solid black;
 }
