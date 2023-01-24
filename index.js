@@ -25,6 +25,9 @@ const keys = {
   arrowUp: {
     pressed: false,
   },
+  Space: {
+    pressed: false,
+  },
 };
 
 //function create image
@@ -150,8 +153,48 @@ class Objects {
   }
 }
 
+let turn = false;
 //monster class
 class Monsters {
+  constructor(x, y, width, height, image, turnRight, turnLeft) {
+    this.position = {
+      x,
+      y,
+    };
+    this.velocity = {
+      x: 1,
+      y: 0,
+    };
+    this.image = image;
+    this.width = width;
+    this.height = height;
+    this.turnRight = turnRight;
+    this.turnLeft = turnLeft;
+  }
+
+  draw() {
+    ctx.drawImage(this.image, this.position.x, this.position.y);
+  }
+  update() {
+    if (this.position.x < this.turnRight) {
+      turn = true;
+      monster1WasLeft = true;
+      monster1WasRight = false;
+    }
+    if (this.position.x > this.turnLeft) {
+      turn = false;
+      monster1WasRight = true;
+      monster1WasLeft = false;
+    }
+    if (!turn) {
+      this.position.x -= this.velocity.x;
+    } else {
+      this.position.x += this.velocity.x;
+    }
+  }
+}
+
+class Coins {
   constructor(x, y, width, height, image) {
     this.position = {
       x,
@@ -291,13 +334,33 @@ let bigPlatforms = [
 const monster1Image = createImage("/img/animations/monster1/monsterleft1.png");
 
 let monsters = [
-  new Monsters(600, 330, 120, 120, monster1Image),
-  new Monsters(700, 330, 120, 120, monster1Image),
+  new Monsters(600, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(900, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(1200, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(1500, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(1800, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(2100, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(2300, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(2700, 330, 64, 64, monster1Image, 0, 2000),
 ];
 
+//coins
+const coinsImage = createImage("/img/animations/Slice0.png");
+
+let coin = [
+  new Coins(120, 415, 64, 64, coinsImage),
+  new Coins(140, 415, 64, 64, coinsImage),
+  new Coins(160, 415, 64, 64, coinsImage),
+  new Coins(803, 415, 64, 64, coinsImage),
+  new Coins(823, 415, 64, 64, coinsImage),
+  new Coins(843, 415, 64, 64, coinsImage),
+  new Coins(2689, 266, 64, 64, coinsImage),
+  new Coins(3030, 415, 64, 64, coinsImage),
+  new Coins(3050, 415, 64, 64, coinsImage),
+  new Coins(3070, 415, 64, 64, coinsImage),
+];
 //reset function for when you die
 function reset() {
-  
   player = new Player(
     {
       x: 0,
@@ -305,25 +368,24 @@ function reset() {
     },
     knightImg
   );
-
-  
+  //reset function
   bigPlatforms = [
     new Platform(0, 453, 444, 128, highPlatformBig),
     new Platform(581, 453, 444, 128, highPlatformBig),
     new Platform(1344, 389, 327, 192, higherPlatformSmall),
     new Platform(1153, 453, 319, 128, highPlatformSmall),
     new Platform(1724, 453, 444, 128, highPlatformBig),
-    new Platform(2296, 325, 64, 64, floatingSingleBlock),
-    new Platform(2424, 261, 64, 64, floatingSingleBlock),
-    new Platform(2552, 453, 64, 64, floatingSingleBlock),
-    new Platform(2680, 325, 64, 64, floatingSingleBlock),
+    new Platform(2296, 325, 34, 64, floatingSingleBlock),
+    new Platform(2424, 261, 34, 64, floatingSingleBlock),
+    new Platform(2552, 453, 34, 64, floatingSingleBlock),
+    new Platform(2680, 325, 34, 64, floatingSingleBlock),
     new Platform(2808, 453, 444, 128, highPlatformBig),
-    new Platform(3316, 325, 64, 64, floatingSingleBlock),
-    new Platform(3444, 133, 64, 64, floatingSingleBlock),
-    new Platform(3700, 453, 192, 64, floatingPlatform),
+    new Platform(3316, 325, 34, 64, floatingSingleBlock),
+    new Platform(3444, 133, 34, 64, floatingSingleBlock),
+    new Platform(3732, 453, 192, 64, floatingPlatform),
     new Platform(3850, 382, 64, 64, door),
   ];
-
+  //reset function
   clouds = [
     new Objects(getRandomInt(0, 3778), getRandomInt(0, 200), 3778, 308, cloud1),
     new Objects(getRandomInt(0, 3778), getRandomInt(0, 200), 3778, 308, cloud2),
@@ -403,17 +465,36 @@ function reset() {
       3778,
       308,
       cloud19
-
     ),
   ];
-    monsters = [
-        new Monsters(600, 330, 120, 120, monster1Image),
-        new Monsters(700, 330, 120, 120, monster1Image),
-      ];
+  //reset function
+  monsters = [
+    new Monsters(600, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(900, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(1200, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(1500, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(1800, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(2100, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(2300, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(2700, 330, 64, 64, monster1Image, 0, 2000),
+  ];
+
+  coin = [
+    new Coins(120, 415, 64, 64, coinsImage),
+    new Coins(140, 415, 64, 64, coinsImage),
+    new Coins(160, 415, 64, 64, coinsImage),
+    new Coins(803, 415, 64, 64, coinsImage),
+    new Coins(823, 415, 64, 64, coinsImage),
+    new Coins(843, 415, 64, 64, coinsImage),
+    new Coins(2689, 266, 64, 64, coinsImage),
+    new Coins(3030, 415, 64, 64, coinsImage),
+    new Coins(3050, 415, 64, 64, coinsImage),
+    new Coins(3070, 415, 64, 64, coinsImage),
+  ];
   scrollOfset = 0;
+  //reset function finished
 }
 
-//array of hearts
 const heartImg = createImage("/img/level 1 img/heart.png");
 let totalHearts = 3;
 let hearts = [
@@ -428,11 +509,14 @@ let idleRight = 1;
 let idleLeft = 1;
 let runRight = 1;
 let runLeft = 1;
+let attackImg = 1;
 let jumpRight = 1;
 let jumpLeft = 1;
 let monster1 = 1;
 let monster1WasRight = true;
-let monster1WasLeft = true;
+let monster1WasLeft = false;
+let attack = false;
+let coins = 1;
 
 //animate function
 function animate() {
@@ -458,9 +542,24 @@ function animate() {
     heart.draw();
   });
 
+  //coins
+  coin.forEach((coin) => {
+    coin.draw();
+    coin.update();
+    coinsImage.src = "/img/animations/Slice0.png";
+    if (animateId % 20 === 0) {
+      coins += 1;
+      if (coins > 13) {
+        coins = 1;
+      }
+    }
+    coinsImage.src = "/img/animations/Slice" + coins + ".png";
+  });
+
   //monsters
   monsters.forEach((monster) => {
     monster.draw();
+    monster.update();
 
     //monster moving left
     if (monster1WasRight) {
@@ -473,6 +572,7 @@ function animate() {
       }
       monster1Image.src =
         "/img/animations/monster1/monsterleft" + monster1 + ".png";
+      monster1WasLeft = false;
     }
 
     //monster moving right
@@ -486,6 +586,7 @@ function animate() {
       }
       monster1Image.src =
         "/img/animations/monster1/monsterright" + monster1 + ".png";
+      monster1WasRight = false;
     }
   });
 
@@ -570,7 +671,7 @@ function animate() {
     (wasLeft && isMovingUp && keys.a.pressed) ||
     (wasLeft && isMovingUp && keys.arrowLeft.pressed)
   ) {
-    knightImg.src = "/img/animations/knight/jump/jumpleft1.png.png";
+    knightImg.src = "/img/animations/knight/jump/jumpleft1.png";
     if (animateId % 10 === 0) {
       jumpLeft += 1;
       if (jumpLeft === 7) {
@@ -578,6 +679,32 @@ function animate() {
       }
     }
     knightImg.src = "/img/animations/knight/jump/jumpleft" + jumpLeft + ".png";
+  }
+
+  //attack left
+  if (attack && wasLeft) {
+    knightImg.src = "/img/animations/knight/attack/attackleft1.png";
+    if (animateId % 10 === 0) {
+      jumpLeft += 1;
+      if (jumpLeft > 5) {
+        jumpLeft = 1;
+      }
+    }
+    knightImg.src =
+      "/img/animations/knight/attack/attackleft" + jumpLeft + ".png";
+  }
+
+  //attack right
+  if (attack && wasRight) {
+    knightImg.src = "/img/animations/knight/attack/attackright1.png";
+    if (animateId % 10 === 0) {
+      jumpLeft += 1;
+      if (jumpLeft > 5) {
+        jumpLeft = 1;
+      }
+    }
+    knightImg.src =
+      "/img/animations/knight/attack/attackright" + jumpLeft + ".png";
   }
 
   //speed of moving left and right
@@ -599,23 +726,30 @@ function animate() {
     if (keys.d.pressed || keys.arrowRight.pressed) {
       scrollOfset += 2;
 
-      monsters.forEach(monster => {
-        monster.position.x -=2
-      })
+      monsters.forEach((monster) => {
+        monster.position.x -= 2;
+      });
 
       bigPlatforms.forEach((platform) => {
         platform.position.x -= 2;
       });
+
+      coin.forEach((coin) => {
+        coin.position.x -= 2;
+      });
     } else if (keys.a.pressed || keys.arrowLeft.pressed) {
       scrollOfset -= 2;
 
-
-      monsters.forEach(monster => {
-        monster.position.x +=2
-      })
+      monsters.forEach((monster) => {
+        monster.position.x += 2;
+      });
 
       bigPlatforms.forEach((platform) => {
         platform.position.x += 2;
+      });
+
+      coin.forEach((coin) => {
+        coin.position.x += 2;
       });
     }
 
@@ -649,11 +783,52 @@ function animate() {
       player.velocity.y = 0;
     }
   });
+
+  //cheks for collision and player dies
+  monsters.forEach((monster) => {
+    if (
+      monster.position.x < player.position.x + player.width - 70 &&
+      monster.position.x + monster.width > player.position.x &&
+      monster.position.y < player.position.y + player.height - 20 &&
+      monster.height + monster.position.y > player.position.y
+    ) {
+      totalHearts -= 1;
+      hearts.pop();
+      reset();
+    }
+  });
+
+  //attack collision
+  monsters.forEach((monster, index) => {
+    if (
+      monster.position.x < player.position.x + player.width &&
+      monster.position.x + monster.width > player.position.x &&
+      monster.position.y < player.position.y + player.height - 20 &&
+      monster.height + monster.position.y > player.position.y
+    ) {
+      if (keys.Space.pressed) {
+        monsters.splice(index, 1);
+      }
+    }
+  });
 }
+
+coin.forEach((coin, index) => {
+  if (
+    coin.position.x < player.position.x + player.width &&
+    coin.position.x + coin.width > player.position.x &&
+    coin.position.y < player.position.y + player.height - 20 &&
+    coin.height + coin.position.y > player.position.y
+  ) {
+    console.log("coins");
+    coin.splice(index, 1);
+  }
+});
 
 animate();
 //movement tracker
 window.addEventListener("keydown", (event) => {
+  // console.log(event)
   switch (event.key) {
     case "d": //right
       keys.d.pressed = true;
@@ -695,9 +870,11 @@ window.addEventListener("keydown", (event) => {
       }
       isMovingUp = true;
       break;
+    case " ": //attack
+      attack = true;
+      keys.Space.pressed = true;
+      break;
   }
-  console.log(`was left: ${wasLeft}`);
-  console.log(`was right: ${wasRight}`);
 });
 
 window.addEventListener("keyup", (event) => {
@@ -737,6 +914,10 @@ window.addEventListener("keyup", (event) => {
     case "ArrowUp": //up
       keys.arrowUp.pressed = false;
       isMovingUp = false;
+    case " ": //attack
+      attack = false;
+      keys.Space.pressed = false;
+      break;
   }
 });
 
