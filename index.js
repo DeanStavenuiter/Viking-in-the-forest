@@ -1,9 +1,10 @@
-const canvas = document.querySelector("canvas");
+const canvas = document.querySelector(".game");
 const ctx = canvas.getContext("2d");
 
 const gravity = 0.5;
 let gameOver = false;
 let animateId;
+let score = 0;
 
 //keys
 const keys = {
@@ -314,6 +315,7 @@ let clouds = [
 
 //array of platforms
 let bigPlatforms = [
+  new Platform(-192, 453, 444, 128, floatingSingleBlock),
   new Platform(0, 453, 444, 128, highPlatformBig),
   new Platform(581, 453, 444, 128, highPlatformBig),
   new Platform(1344, 389, 327, 192, higherPlatformSmall),
@@ -342,23 +344,28 @@ let monsters = [
   new Monsters(2100, 330, 64, 64, monster1Image, 0, 2000),
   new Monsters(2300, 330, 64, 64, monster1Image, 0, 2000),
   new Monsters(2700, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(2900, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(3000, 330, 64, 64, monster1Image, 0, 2000),
 ];
 
 //coins
-const coinsImage = createImage("/img/animations/Slice0.png");
+const coinsImage = createImage("/img/animations/Slice1.png");
 
 let coin = [
-  new Coins(120, 415, 64, 64, coinsImage),
-  new Coins(140, 415, 64, 64, coinsImage),
-  new Coins(160, 415, 64, 64, coinsImage),
-  new Coins(803, 415, 64, 64, coinsImage),
-  new Coins(823, 415, 64, 64, coinsImage),
-  new Coins(843, 415, 64, 64, coinsImage),
-  new Coins(2689, 266, 64, 64, coinsImage),
-  new Coins(3030, 415, 64, 64, coinsImage),
-  new Coins(3050, 415, 64, 64, coinsImage),
-  new Coins(3070, 415, 64, 64, coinsImage),
+  new Coins(120, 415, 25, 25, coinsImage),
+  new Coins(140, 415, 25, 25, coinsImage),
+  new Coins(160, 415, 25, 25, coinsImage),
+  new Coins(803, 415, 25, 25, coinsImage),
+  new Coins(823, 415, 25, 25, coinsImage),
+  new Coins(843, 415, 25, 25, coinsImage),
+  new Coins(2689, 266, 25, 25, coinsImage),
+  new Coins(3030, 415, 25, 25, coinsImage),
+  new Coins(3050, 415, 25, 25, coinsImage),
+  new Coins(3070, 415, 25, 25, coinsImage),
 ];
+
+let totalCoins = new Coins(10, 15, 25, 25, coinsImage);
+
 //reset function for when you die
 function reset() {
   player = new Player(
@@ -368,8 +375,10 @@ function reset() {
     },
     knightImg
   );
+  score = -1;
   //reset function
   bigPlatforms = [
+    new Platform(-192, 453, 444, 128, floatingSingleBlock),
     new Platform(0, 453, 444, 128, highPlatformBig),
     new Platform(581, 453, 444, 128, highPlatformBig),
     new Platform(1344, 389, 327, 192, higherPlatformSmall),
@@ -382,8 +391,8 @@ function reset() {
     new Platform(2808, 453, 444, 128, highPlatformBig),
     new Platform(3316, 325, 34, 64, floatingSingleBlock),
     new Platform(3444, 133, 34, 64, floatingSingleBlock),
-    new Platform(3732, 453, 192, 64, floatingPlatform),
-    new Platform(3850, 382, 64, 64, door),
+    new Platform(3668, 453, 192, 64, floatingPlatform),
+    new Platform(3722, 382, 64, 64, door),
   ];
   //reset function
   clouds = [
@@ -469,7 +478,6 @@ function reset() {
   ];
   //reset function
   monsters = [
-    new Monsters(600, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(900, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(1200, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(1500, 330, 64, 64, monster1Image, 0, 2000),
@@ -480,21 +488,52 @@ function reset() {
   ];
 
   coin = [
-    new Coins(120, 415, 64, 64, coinsImage),
-    new Coins(140, 415, 64, 64, coinsImage),
-    new Coins(160, 415, 64, 64, coinsImage),
-    new Coins(803, 415, 64, 64, coinsImage),
-    new Coins(823, 415, 64, 64, coinsImage),
-    new Coins(843, 415, 64, 64, coinsImage),
-    new Coins(2689, 266, 64, 64, coinsImage),
-    new Coins(3030, 415, 64, 64, coinsImage),
-    new Coins(3050, 415, 64, 64, coinsImage),
-    new Coins(3070, 415, 64, 64, coinsImage),
+    new Coins(120, 415, 25, 25, coinsImage),
+    new Coins(140, 415, 25, 25, coinsImage),
+    new Coins(160, 415, 25, 25, coinsImage),
+    new Coins(803, 415, 25, 25, coinsImage),
+    new Coins(823, 415, 25, 25, coinsImage),
+    new Coins(843, 415, 25, 25, coinsImage),
+    new Coins(2689, 266, 25, 25, coinsImage),
+    new Coins(3030, 415, 25, 25, coinsImage),
+    new Coins(3050, 415, 25, 25, coinsImage),
+    new Coins(3070, 415, 25, 25, coinsImage),
+    new Coins(0, 0, 25, 25, coinsImage),
   ];
+
+  BgLayers = [
+    new StartBg(-1017, -302, 1028, 0, bg10, -517, -250, 0.1),
+    new StartBg(-1017, -302, 1028, 0, bg9, -517, -250, 0.2),
+    new StartBg(-1017, -302, 1028, 0, bg11, -517, -250, 0.1),
+    new StartBg(-1017, -302, 1028, 0, bg12, -517, -250, 0.2),
+    new StartBg(-1017, -302, 1028, 0, bg6, -517, -250, 0.1),
+    new StartBg(-1017, -302, 1028, 0, bg5, -517, -250, 0.2),
+    new StartBg(-1017, -302, 1028, 0, bg4, -517, -250, 0.1),
+    new StartBg(-1017, -302, 1028, 0, bg3, -517, -250, 0.2),
+    new StartBg(-1017, -302, 1028, 0, bg2, -517, -250, 0.1),
+    new StartBg(-1017, -302, 1028, 0, bg7, -517, -250, 0.2),
+    new StartBg(-1017, -302, 1028, 0, bg1, -517, -250, 0.1),
+    new StartBg(-1017, -302, 1028, 0, bg8, -517, -250, 0.2),
+    new StartBg(-2034, -302, 1028, 0, bg10, -517, -250, 0.1),
+    new StartBg(-2034, -302, 1028, 0, bg9, -517, -250, 0.2),
+    new StartBg(-2034, -302, 1028, 0, bg11, -517, -250, 0.1),
+    new StartBg(-2034, -302, 1028, 0, bg12, -517, -250, 0.2),
+    new StartBg(-2034, -302, 1028, 0, bg6, -517, -250, 0.1),
+    new StartBg(-2034, -302, 1028, 0, bg5, -517, -250, 0.2),
+    new StartBg(-2034, -302, 1028, 0, bg4, -517, -250, 0.1),
+    new StartBg(-2034, -302, 1028, 0, bg3, -517, -250, 0.2),
+    new StartBg(-2034, -302, 1028, 0, bg2, -517, -250, 0.1),
+    new StartBg(-2034, -302, 1028, 0, bg7, -517, -250, 0.2),
+    new StartBg(-2034, -302, 1028, 0, bg1, -517, -250, 0.1),
+    new StartBg(-2034, -302, 1028, 0, bg8, -517, -250, 0.2),
+  ];
+  totalCoins = new Coins(10, 15, 25, 25, coinsImage);
+
   scrollOfset = 0;
   //reset function finished
 }
 
+//hearts
 const heartImg = createImage("/img/level 1 img/heart.png");
 let totalHearts = 3;
 let hearts = [
@@ -523,13 +562,28 @@ function animate() {
   animateId = window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  //background
-  backgroundGame.update();
+  BgLayers.forEach((layer) => {
+    if (layer.x > canvas.width / 2) {
+      layer.x = -1017;
+    }
+
+    layer.draw();
+    layer.update();
+  });
+
+  //score
+  ctx.font = "15px serif";
+  ctx.fillStyle = "white";
+  ctx.fillText(score, 37, 33);
 
   //clouds
   clouds.forEach((cloudImg) => {
     cloudImg.draw();
     cloudImg.update();
+    if (cloudImg.position.x < -250) {
+      (cloudImg.position.x = getRandomInt(1500, 3778)),
+        (cloudImg.position.y = getRandomInt(0, 200));
+    }
   });
 
   //platforms
@@ -543,6 +597,8 @@ function animate() {
   });
 
   //coins
+  totalCoins.draw();
+
   coin.forEach((coin) => {
     coin.draw();
     coin.update();
@@ -811,21 +867,21 @@ function animate() {
       }
     }
   });
+
+  coin.forEach((singleCoin, index) => {
+    if (
+      singleCoin.position.x < player.position.x + player.width &&
+      singleCoin.position.x + singleCoin.width > player.position.x &&
+      singleCoin.position.y < player.position.y + player.height &&
+      singleCoin.height + singleCoin.position.y > player.position.y
+    ) {
+      console.log("coins");
+      score++;
+      coin.splice(index, 1);
+    }
+  });
 }
 
-coin.forEach((coin, index) => {
-  if (
-    coin.position.x < player.position.x + player.width &&
-    coin.position.x + coin.width > player.position.x &&
-    coin.position.y < player.position.y + player.height - 20 &&
-    coin.height + coin.position.y > player.position.y
-  ) {
-    console.log("coins");
-    coin.splice(index, 1);
-  }
-});
-
-animate();
 //movement tracker
 window.addEventListener("keydown", (event) => {
   // console.log(event)
@@ -921,5 +977,202 @@ window.addEventListener("keyup", (event) => {
   }
 });
 
-console.log(`was left: ${wasLeft}`);
-console.log(`was right: ${wasRight}`);
+let turnBg = false;
+
+class StartBg {
+  constructor(x, y, width, height, image, left, right, velocity) {
+    this.position = {
+      x,
+      y,
+    };
+    this.velocity = {
+      x: velocity,
+      y: 0,
+    };
+    this.width = width;
+    this.height = height;
+
+    this.turnLeft = left;
+    this.turnRight = right;
+    this.image = image;
+  }
+
+  draw() {
+    ctx.drawImage(this.image, this.position.x, this.position.y);
+  }
+  update() {
+    if (this.position.x < this.turnRight) {
+      this.position.x += this.velocity.x;
+    }
+    if (this.position.x > this.turnLeft) {
+      this.position.x += this.velocity.x;
+    }
+  }
+}
+
+const bg1 = createImage("/img/animations/background/longerbg/Group 43.png");
+const bg2 = createImage("/img/animations/background/longerbg/Group 44.png");
+const bg3 = createImage("/img/animations/background/longerbg/Group 44.png");
+const bg4 = createImage("/img/animations/background/longerbg/Group 45.png");
+const bg5 = createImage("/img/animations/background/longerbg/Group 46.png");
+const bg6 = createImage("/img/animations/background/longerbg/Group 47.png");
+const bg7 = createImage("/img/animations/background/longerbg/Group 48.png");
+const bg8 = createImage("/img/animations/background/longerbg/Group 49.png");
+const bg9 = createImage("/img/animations/background/longerbg/Group 50.png");
+const bg10 = createImage("/img/animations/background/longerbg/Group 51.png");
+const bg11 = createImage("/img/animations/background/longerbg/Group 52.png");
+const bg12 = createImage("/img/animations/background/longerbg/Group 53.png");
+const bg13 = createImage("/img/animations/background/longerbg/Group 54.png");
+
+let BgLayers = [
+  new StartBg(-1017, -302, 1028, 0, bg10, -517, -250, 0.1),
+  new StartBg(-1017, -302, 1028, 0, bg9, -517, -250, 0.2),
+  new StartBg(-1017, -302, 1028, 0, bg11, -517, -250, 0.1),
+  new StartBg(-1017, -302, 1028, 0, bg12, -517, -250, 0.2),
+  new StartBg(-1017, -302, 1028, 0, bg6, -517, -250, 0.1),
+  new StartBg(-1017, -302, 1028, 0, bg5, -517, -250, 0.2),
+  new StartBg(-1017, -302, 1028, 0, bg4, -517, -250, 0.1),
+  new StartBg(-1017, -302, 1028, 0, bg3, -517, -250, 0.2),
+  new StartBg(-1017, -302, 1028, 0, bg2, -517, -250, 0.1),
+  new StartBg(-1017, -302, 1028, 0, bg7, -517, -250, 0.2),
+  new StartBg(-1017, -302, 1028, 0, bg1, -517, -250, 0.1),
+  new StartBg(-1017, -302, 1028, 0, bg8, -517, -250, 0.2),
+  new StartBg(-2034, -302, 1028, 0, bg10, -517, -250, 0.1),
+  new StartBg(-2034, -302, 1028, 0, bg9, -517, -250, 0.2),
+  new StartBg(-2034, -302, 1028, 0, bg11, -517, -250, 0.1),
+  new StartBg(-2034, -302, 1028, 0, bg12, -517, -250, 0.2),
+  new StartBg(-2034, -302, 1028, 0, bg6, -517, -250, 0.1),
+  new StartBg(-2034, -302, 1028, 0, bg5, -517, -250, 0.2),
+  new StartBg(-2034, -302, 1028, 0, bg4, -517, -250, 0.1),
+  new StartBg(-2034, -302, 1028, 0, bg3, -517, -250, 0.2),
+  new StartBg(-2034, -302, 1028, 0, bg2, -517, -250, 0.1),
+  new StartBg(-2034, -302, 1028, 0, bg7, -517, -250, 0.2),
+  new StartBg(-2034, -302, 1028, 0, bg1, -517, -250, 0.1),
+  new StartBg(-2034, -302, 1028, 0, bg8, -517, -250, 0.2),
+];
+
+class ChoosePlayer {
+  constructor(x, y, image, ctx) {
+    this.position = {
+      x,
+      y,
+    };
+    this.height = 64;
+    this.width = 64;
+    this.image = image;
+    this.ctx = ctx;
+  }
+  //draw player
+  draw() {
+    this.ctx.drawImage(this.image, this.position.x, this.position.y);
+  }
+
+  update() {
+    this.draw();
+  }
+}
+
+// let MageImg = createImage('/img/animations/mage/mage.png')
+// let RogueImg = createImage('/img/animations/rogue/rogueright.png')
+
+// const charKnight = document.querySelector("#characterKnight");
+// const ctxKnight = charKnight.getContext("2d");
+// const charMage = document.querySelector("#characterMage");
+// const ctxMage = charMage.getContext("2d");
+// const charRoque = document.querySelector("#characterRogue");
+// const ctxRogue = charRoque.getContext("2d");
+
+// charKnight.width = 125;
+// charKnight.height = 125;
+// charMage.width = 125;
+// charMage.height = 125;
+// charRoque.width = 125;
+// charRoque.height = 125;
+
+// let Knight = new ChoosePlayer(0, 0, knightImg, ctxKnight);
+// let Mage = new ChoosePlayer(0, 0, MageImg, ctxMage);
+// let Roque = new ChoosePlayer(0, 0, RogueImg, ctxRogue);
+
+// let animateIdKnight;
+// let animateIdMage;
+// let animateIdRogue;
+
+// let mageImg = 0;
+// let rogueImg = 0;
+
+// function animateKnight() {
+//   animateIdKnight = window.requestAnimationFrame(animateKnight);
+//   ctxKnight.clearRect(0, 0, canvas.width, canvas.height);
+
+//   Knight.update();
+
+//   knightImg.src = "/img/animations/knight/idle/idleright1.png";
+//   if (animateIdKnight % 10 === 0) {
+//     idleRight += 1;
+//     if (idleRight > 12) {
+//       idleRight = 1;
+//     }
+//   }
+//   knightImg.src = "/img/animations/knight/idle/idleright" + idleRight + ".png";
+// }
+
+// function animateMage() {
+//   animateIdMage = window.requestAnimationFrame(animateMage);
+//   ctxMage.clearRect(0, 0, canvas.width, canvas.height);
+
+//   Mage.update()
+
+//   MageImg.src = "/img/animations/mage/idle/idleright1.png";
+//   if (animateIdMage % 10 === 0) {
+//     mageImg += 1;
+//     if (mageImg > 14) {
+//       mageImg = 1;
+//     }
+//   }
+//   MageImg.src = "/img/animations/mage/idle/idleright" + mageImg + ".png";
+// }
+
+// function animateRogue() {
+//   animateIdRogue = window.requestAnimationFrame(animateRogue);
+//   ctxRogue.clearRect(0, 0, canvas.width, canvas.height);
+
+//   Roque.update();
+
+//   RogueImg.src = "/img/animations/rogue/idle/idleright1.png.png";
+//   if (animateIdRogue % 10 === 0) {
+//     rogueImg += 1;
+//     if (rogueImg > 18) {
+//       rogueImg = 1;
+//     }
+//   }
+//   RogueImg.src = "/img/animations/rogue/idle/idleright" + rogueImg + ".png";
+// }
+
+function animateStart() {
+  animateId = window.requestAnimationFrame(animateStart);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  BgLayers.forEach((layer) => {
+    if (layer.x > canvas.width / 2) {
+      layer.x = -1017;
+    }
+
+    layer.draw();
+    layer.update();
+  });
+}
+
+window.onload = () => {
+  animateStart();
+
+  // animateKnight();
+  // animateMage();
+  // animateRogue();
+
+  const startGameBtn = document.querySelector(".pixel2");
+  startGameBtn.addEventListener("click", () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    cancelAnimationFrame(animateId);
+    animate();
+  });
+};

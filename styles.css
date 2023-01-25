@@ -5,7 +5,23 @@ body{
     align-items: center;
     background: rgb(255, 255, 255);
     margin: 0 auto;
+    flex-direction: column;
 }
-canvas{
+canvas .game{
     border: 1px solid black;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+}
+
+.keys {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    margin-top: 25px;
 }

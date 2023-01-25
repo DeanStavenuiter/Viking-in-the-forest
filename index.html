@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Game</title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
-    <canvas width="1024" height="576"></canvas>
-</body>
-<script src="/index.js"></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/buttons.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=VT323"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <canvas class="game" width="1024" height="576"></canvas>
+    <div class="characters">
+      <canvas id="characterKnight" class="characterKnight"></canvas>
+      <canvas id="characterMage" class="characterMage"></canvas>
+      <canvas id="characterRogue" class="characterRogue"></canvas>
+    </div>
+
+    <div class="keys">
+      <img src="/img/buttons/a.png" alt="" />
+      <img src="/img/buttons/w.png" alt="" />
+      <img src="/img/buttons/d.png" alt="" />
+      <img src="/img/buttons/space.png" alt="" />
+      <img src="/img/buttons/left.png" alt="" />
+      <img src="/img/buttons/up.png" alt="" />
+      <img src="/img/buttons/right.png" alt="" />
+    </div>
+    <div class="container">
+      <div class="pixel2">Start Game<br</div>
+    </div>
+  </body>
+  <script src="/index.js"></script>
 </html>
