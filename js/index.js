@@ -246,7 +246,7 @@ class Chests {
 }
 
 //create a player with his starting positions
-const knightImg = createImage("/img/animations/knight/knight right.png");
+const knightImg = createImage("/images/animations/knight/knight right.png");
 let player = new Player(
   {
     x: 0,
@@ -267,46 +267,46 @@ let imgChar = 1;
 // let damage = false;
 
 //big platforms
-const highPlatformBig = createImage("/img/level 1 img/highBigPlatform.png");
+const highPlatformBig = createImage("/images/level 1 img/highBigPlatform.png");
 
 //high platform small
-const highPlatformSmall = createImage("/img/level 1 img/highSmallPlatform.png");
+const highPlatformSmall = createImage("/images/level 1 img/highSmallPlatform.png");
 
 //higher platform small
 const higherPlatformSmall = createImage(
-  "/img/level 1 img/higherSmallPlatform.png"
+  "/images/level 1 img/higherSmallPlatform.png"
 );
 
 //floating platform
-const floatingPlatform = createImage("/img/level 1 img/floating-platform.png");
+const floatingPlatform = createImage("/images/level 1 img/floating-platform.png");
 
 //floating single block
 const floatingSingleBlock = createImage(
-  "img/level 1 img/single-floating-block.png"
+  "/images/level 1 img/single-floating-block.png"
 );
 //door
-const door = createImage("/img/level 1 img/door-closed.png");
+const door = createImage("/images/level 1 img/door-closed.png");
 
 //clouds
-const cloud1 = createImage("img/clouds/cloud_shape2_1.png");
-const cloud2 = createImage("img/clouds/cloud_shape2_2.png");
-const cloud3 = createImage("img/clouds/cloud_shape2_3.png");
-const cloud4 = createImage("img/clouds/cloud_shape2_4.png");
-const cloud5 = createImage("img/clouds/cloud_shape3_1.png");
-const cloud6 = createImage("img/clouds/cloud_shape3_2.png");
-const cloud7 = createImage("img/clouds/cloud_shape3_3.png");
-const cloud8 = createImage("img/clouds/cloud_shape3_4.png");
-const cloud9 = createImage("img/clouds/cloud_shape3_5.png");
-const cloud10 = createImage("img/clouds/cloud_shape4_1.png");
-const cloud11 = createImage("img/clouds/cloud_shape4_2.png");
-const cloud12 = createImage("img/clouds/cloud_shape4_3.png");
-const cloud13 = createImage("img/clouds/cloud_shape4_4.png");
-const cloud14 = createImage("img/clouds/cloud_shape4_5.png");
-const cloud15 = createImage("img/clouds/cloud_shape6_1.png");
-const cloud16 = createImage("img/clouds/cloud_shape6_2.png");
-const cloud17 = createImage("img/clouds/cloud_shape6_3.png");
-const cloud18 = createImage("img/clouds/cloud_shape6_4.png");
-const cloud19 = createImage("img/clouds/cloud_shape6_5.png");
+const cloud1 = createImage("images/clouds/cloud_shape2_1.png");
+const cloud2 = createImage("images/clouds/cloud_shape2_2.png");
+const cloud3 = createImage("images/clouds/cloud_shape2_3.png");
+const cloud4 = createImage("images/clouds/cloud_shape2_4.png");
+const cloud5 = createImage("images/clouds/cloud_shape3_1.png");
+const cloud6 = createImage("images/clouds/cloud_shape3_2.png");
+const cloud7 = createImage("images/clouds/cloud_shape3_3.png");
+const cloud8 = createImage("images/clouds/cloud_shape3_4.png");
+const cloud9 = createImage("images/clouds/cloud_shape3_5.png");
+const cloud10 = createImage("images/clouds/cloud_shape4_1.png");
+const cloud11 = createImage("images/clouds/cloud_shape4_2.png");
+const cloud12 = createImage("images/clouds/cloud_shape4_3.png");
+const cloud13 = createImage("images/clouds/cloud_shape4_4.png");
+const cloud14 = createImage("images/clouds/cloud_shape4_5.png");
+const cloud15 = createImage("images/clouds/cloud_shape6_1.png");
+const cloud16 = createImage("images/clouds/cloud_shape6_2.png");
+const cloud17 = createImage("images/clouds/cloud_shape6_3.png");
+const cloud18 = createImage("images/clouds/cloud_shape6_4.png");
+const cloud19 = createImage("images/clouds/cloud_shape6_5.png");
 
 let clouds = [
   new Objects(getRandomInt(0, 3778), getRandomInt(0, 200), 3778, 308, cloud1),
@@ -357,7 +357,7 @@ let bigPlatforms = [
 ];
 
 //monsters
-const monster1Image = createImage("/img/animations/monster1/monsterleft1.png");
+const monster1Image = createImage("/images/animations/monster1/monsterleft1.png");
 
 let monsters = [
   new Monsters(600, 330, 64, 64, monster1Image, 0, 2000),
@@ -375,11 +375,10 @@ let monsters = [
   new Monsters(4500, 330, 64, 64, monster1Image, 0, 2000),
   new Monsters(4600, 330, 64, 64, monster1Image, 0, 2000),
   new Monsters(4800, 330, 64, 64, monster1Image, 0, 2000),
-
 ];
 
 //coins
-const coinsImage = createImage("/img/animations/Slice1.png");
+const coinsImage = createImage("/images/animations/Slice1.png");
 
 let coin = [
   new Coins(120, 415, 25, 25, coinsImage),
@@ -397,14 +396,12 @@ let coin = [
 let totalCoins = new Coins(10, 15, 25, 25, coinsImage);
 
 //chests
-const chestImg = createImage("/img/level 1 img/chest_closed.png");
-const batmanImg = createImage("/img/level 1 img/batman.png")
+const chestImg = createImage("/images/level 1 img/chest_closed.png");
+const batmanImg = createImage("/images/level 1 img/batman.png");
 
-let chests = [
-  new Chests(6400, 407, 64, 64, chestImg),
-];
+let chests = [new Chests(6400, 407, 64, 64, chestImg)];
 
-let batman = new Chests(-256,407, 64, 64, batmanImg)
+let batman = new Chests(-256, 407, 64, 64, batmanImg);
 
 //reset function for when you die
 function reset() {
@@ -441,11 +438,9 @@ function reset() {
     new Platform(6024, 453, 444, 128, highPlatformBig),
   ];
   //reset function
-  chests = [
-    new Chests(6400, 407, 64, 64, chestImg),
-  ];
+  chests = [new Chests(6400, 407, 64, 64, chestImg)];
 
-  batman = new Chests(-256,407, 64, 64, batmanImg)
+  batman = new Chests(-256, 407, 64, 64, batmanImg);
 
   clouds = [
     new Objects(getRandomInt(0, 3778), getRandomInt(0, 200), 3778, 308, cloud1),
@@ -598,7 +593,7 @@ function reset() {
 }
 
 //hearts
-const heartImg = createImage("/img/level 1 img/heart.png");
+const heartImg = createImage("/images/level 1 img/heart.png");
 let totalHearts = 3;
 let hearts = [
   new Hearts(850, 10, 30, 30, heartImg),
@@ -646,7 +641,7 @@ function animate() {
     chest.draw();
   });
 
-  batman.draw()
+  batman.draw();
   //clouds
   clouds.forEach((cloudImg) => {
     cloudImg.draw();
@@ -673,14 +668,14 @@ function animate() {
   coin.forEach((coin) => {
     coin.draw();
     coin.update();
-    coinsImage.src = "/img/animations/Slice0.png";
+    coinsImage.src = "/images/animations/Slice0.png";
     if (animateId % 20 === 0) {
       coins += 1;
       if (coins > 13) {
         coins = 1;
       }
     }
-    coinsImage.src = "/img/animations/Slice" + coins + ".png";
+    coinsImage.src = "/images/animations/Slice" + coins + ".png";
   });
 
   //monsters
@@ -690,7 +685,7 @@ function animate() {
 
     //monster moving left
     if (monster1WasRight) {
-      monster1Image.src = "/img/animations/monster1/monsterleft1.png";
+      monster1Image.src = "/images/animations/monster1/monsterleft1.png";
       if (animateId % 20 === 0) {
         monster1 += 1;
         if (monster1 > 6) {
@@ -698,13 +693,13 @@ function animate() {
         }
       }
       monster1Image.src =
-        "/img/animations/monster1/monsterleft" + monster1 + ".png";
+        "/images/animations/monster1/monsterleft" + monster1 + ".png";
       monster1WasLeft = false;
     }
 
     //monster moving right
     if (monster1WasLeft) {
-      monster1Image.src = "/img/animations/monster1/monsterright1.png";
+      monster1Image.src = "/images/animations/monster1/monsterright1.png";
       if (animateId % 20 === 0) {
         monster1 += 1;
         if (monster1 > 6) {
@@ -712,7 +707,7 @@ function animate() {
         }
       }
       monster1Image.src =
-        "/img/animations/monster1/monsterright" + monster1 + ".png";
+        "/images/animations/monster1/monsterright" + monster1 + ".png";
       monster1WasRight = false;
     }
   });
@@ -722,7 +717,7 @@ function animate() {
 
   //idle right
   if (isNotMoving && wasRight) {
-    knightImg.src = "/img/animations/knight/idle/idleright1.png";
+    knightImg.src = "/images/animations/knight/idle/idleright1.png";
     if (animateId % 10 === 0) {
       idleRight += 1;
       if (idleRight > 12) {
@@ -730,19 +725,19 @@ function animate() {
       }
     }
     knightImg.src =
-      "/img/animations/knight/idle/idleright" + idleRight + ".png";
+      "/images/animations/knight/idle/idleright" + idleRight + ".png";
   }
 
   //idle left
   if (isNotMoving && wasLeft) {
-    knightImg.src = "/img/animations/knight/idle/idleleft1.png";
+    knightImg.src = "/images/animations/knight/idle/idleleft1.png";
     if (animateId % 10 === 0) {
       idleLeft += 1;
       if (idleLeft > 12) {
         idleLeft = 1;
       }
     }
-    knightImg.src = "/img/animations/knight/idle/idleleft" + idleLeft + ".png";
+    knightImg.src = "/images/animations/knight/idle/idleleft" + idleLeft + ".png";
   }
 
   //run right
@@ -750,14 +745,14 @@ function animate() {
     (keys.d.pressed && isMovingRight) ||
     (keys.arrowRight.pressed && isMovingRight)
   ) {
-    knightImg.src = "/img/animations/knight/walk/walkright1.png";
+    knightImg.src = "/images/animations/knight/walk/walkright1.png";
     if (animateId % 10 === 0) {
       runRight += 1;
       if (runRight === 6) {
         runRight = 1;
       }
     }
-    knightImg.src = "/img/animations/knight/walk/walkright" + runRight + ".png";
+    knightImg.src = "/images/animations/knight/walk/walkright" + runRight + ".png";
   }
 
   //run left
@@ -765,14 +760,14 @@ function animate() {
     (keys.a.pressed && isMovingLeft) ||
     (keys.arrowLeft.pressed && isMovingLeft)
   ) {
-    knightImg.src = "/img/animations/knight/walk/walkleft1.png";
+    knightImg.src = "/images/animations/knight/walk/walkleft1.png";
     if (animateId % 10 === 0) {
       runLeft += 1;
       if (runLeft === 6) {
         runLeft = 1;
       }
     }
-    knightImg.src = "/img/animations/knight/walk/walkleft" + runLeft + ".png";
+    knightImg.src = "/images/animations/knight/walk/walkleft" + runLeft + ".png";
   }
 
   //jump right
@@ -781,7 +776,7 @@ function animate() {
     (wasRight && isMovingUp && keys.d.pressed) ||
     (wasRight && isMovingUp && keys.arrowRight.pressed)
   ) {
-    knightImg.src = "/img/animations/knight/jump/jumpright1.png.png";
+    knightImg.src = "/images/animations/knight/jump/jumpright1.png.png";
     if (animateId % 10 === 0) {
       jumpRight += 1;
       if (jumpRight === 7) {
@@ -789,7 +784,7 @@ function animate() {
       }
     }
     knightImg.src =
-      "/img/animations/knight/jump/jumpright" + jumpRight + ".png";
+      "/images/animations/knight/jump/jumpright" + jumpRight + ".png";
   }
 
   //jump left
@@ -798,19 +793,19 @@ function animate() {
     (wasLeft && isMovingUp && keys.a.pressed) ||
     (wasLeft && isMovingUp && keys.arrowLeft.pressed)
   ) {
-    knightImg.src = "/img/animations/knight/jump/jumpleft1.png";
+    knightImg.src = "/images/animations/knight/jump/jumpleft1.png";
     if (animateId % 10 === 0) {
       jumpLeft += 1;
       if (jumpLeft === 7) {
         jumpLeft = 1;
       }
     }
-    knightImg.src = "/img/animations/knight/jump/jumpleft" + jumpLeft + ".png";
+    knightImg.src = "/images/animations/knight/jump/jumpleft" + jumpLeft + ".png";
   }
 
   //attack left
   if (attack && wasLeft) {
-    knightImg.src = "/img/animations/knight/attack/attackleft1.png";
+    knightImg.src = "/images/animations/knight/attack/attackleft1.png";
     if (animateId % 10 === 0) {
       jumpLeft += 1;
       if (jumpLeft > 5) {
@@ -818,12 +813,12 @@ function animate() {
       }
     }
     knightImg.src =
-      "/img/animations/knight/attack/attackleft" + jumpLeft + ".png";
+      "/images/animations/knight/attack/attackleft" + jumpLeft + ".png";
   }
 
   //attack right
   if (attack && wasRight) {
-    knightImg.src = "/img/animations/knight/attack/attackright1.png";
+    knightImg.src = "/images/animations/knight/attack/attackright1.png";
     if (animateId % 10 === 0) {
       jumpLeft += 1;
       if (jumpLeft > 5) {
@@ -831,7 +826,7 @@ function animate() {
       }
     }
     knightImg.src =
-      "/img/animations/knight/attack/attackright" + jumpLeft + ".png";
+      "/images/animations/knight/attack/attackright" + jumpLeft + ".png";
   }
 
   //speed of moving left and right
@@ -869,8 +864,7 @@ function animate() {
         chest.position.x -= 2;
       });
 
-      batman.position.x -= 2
-
+      batman.position.x -= 2;
     } else if (keys.a.pressed || keys.arrowLeft.pressed) {
       scrollOfset -= 2;
 
@@ -889,7 +883,7 @@ function animate() {
         chest.position.x += 2;
       });
 
-      batman.position.x += 2
+      batman.position.x += 2;
     }
 
     let winText1 = "YOU WIN!!";
@@ -898,7 +892,6 @@ function animate() {
     //win scenario
     chests.forEach((chest) => {
       if (player.position.x >= chest.position.x && attack) {
-
         cancelAnimationFrame(animateId);
         ctx.font = "50px VT323";
         ctx.fillStyle = "white";
@@ -907,7 +900,6 @@ function animate() {
         ctx.font = "50px VT323";
         ctx.fillStyle = "white";
         ctx.fillText(winText2, 380, 380);
-
       }
     });
 
@@ -1122,19 +1114,19 @@ class StartBg {
   }
 }
 
-const bg1 = createImage("/img/animations/background/longerbg/Group 43.png");
-const bg2 = createImage("/img/animations/background/longerbg/Group 44.png");
-const bg3 = createImage("/img/animations/background/longerbg/Group 44.png");
-const bg4 = createImage("/img/animations/background/longerbg/Group 45.png");
-const bg5 = createImage("/img/animations/background/longerbg/Group 46.png");
-const bg6 = createImage("/img/animations/background/longerbg/Group 47.png");
-const bg7 = createImage("/img/animations/background/longerbg/Group 48.png");
-const bg8 = createImage("/img/animations/background/longerbg/Group 49.png");
-const bg9 = createImage("/img/animations/background/longerbg/Group 50.png");
-const bg10 = createImage("/img/animations/background/longerbg/Group 51.png");
-const bg11 = createImage("/img/animations/background/longerbg/Group 52.png");
-const bg12 = createImage("/img/animations/background/longerbg/Group 53.png");
-const bg13 = createImage("/img/animations/background/longerbg/Group 54.png");
+const bg1 = createImage("/images/animations/background/longerbg/Group 43.png");
+const bg2 = createImage("/images/animations/background/longerbg/Group 44.png");
+const bg3 = createImage("/images/animations/background/longerbg/Group 44.png");
+const bg4 = createImage("/images/animations/background/longerbg/Group 45.png");
+const bg5 = createImage("/images/animations/background/longerbg/Group 46.png");
+const bg6 = createImage("/images/animations/background/longerbg/Group 47.png");
+const bg7 = createImage("/images/animations/background/longerbg/Group 48.png");
+const bg8 = createImage("/images/animations/background/longerbg/Group 49.png");
+const bg9 = createImage("/images/animations/background/longerbg/Group 50.png");
+const bg10 = createImage("/images/animations/background/longerbg/Group 51.png");
+const bg11 = createImage("/images/animations/background/longerbg/Group 52.png");
+const bg12 = createImage("/images/animations/background/longerbg/Group 53.png");
+const bg13 = createImage("/images/animations/background/longerbg/Group 54.png");
 
 let BgLayers = [
   new StartBg(-1017, -302, 1028, 0, bg10, -517, -250, 0.1),
@@ -1162,7 +1154,6 @@ let BgLayers = [
   new StartBg(-2034, -302, 1028, 0, bg1, -517, -250, 0.1),
   new StartBg(-2034, -302, 1028, 0, bg8, -517, -250, 0.2),
 ];
-
 
 function gameOverFunction() {
   cancelAnimationFrame(animateId);
@@ -1214,11 +1205,10 @@ window.onload = () => {
   startGameBtn.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     cancelAnimationFrame(animateId);
-    reset()
+    reset();
     animate();
   });
 };
-
 
 // class ChoosePlayer {
 //   constructor(x, y, image, ctx) {
