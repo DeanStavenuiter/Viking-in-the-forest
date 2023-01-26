@@ -5,6 +5,7 @@ const gravity = 0.5;
 let gameOver = false;
 let animateId;
 let score = 0;
+let gameOverText = "GAME OVER";
 
 //keys
 const keys = {
@@ -194,7 +195,7 @@ class Monsters {
     }
   }
 }
-
+// coin class
 class Coins {
   constructor(x, y, width, height, image) {
     this.position = {
@@ -219,14 +220,30 @@ class Coins {
   }
 }
 
-//create background
-let backgroundGame = new Background({
-  position: {
-    x: 0,
-    y: -517,
-  },
-  imgSrc: "/img//level 1 img/background.png",
-});
+//chest class
+class Chests {
+  constructor(x, y, width, height, image) {
+    this.position = {
+      x,
+      y,
+    };
+    this.velocity = {
+      x: 0,
+      y: 0,
+    };
+    this.image = image;
+    this.width = width;
+    this.height = height;
+  }
+
+  draw() {
+    ctx.drawImage(this.image, this.position.x, this.position.y);
+  }
+  update() {
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+  }
+}
 
 //create a player with his starting positions
 const knightImg = createImage("/img/animations/knight/knight right.png");
@@ -321,15 +338,22 @@ let bigPlatforms = [
   new Platform(1344, 389, 327, 192, higherPlatformSmall),
   new Platform(1153, 453, 319, 128, highPlatformSmall),
   new Platform(1724, 453, 444, 128, highPlatformBig),
-  new Platform(2296, 325, 34, 64, floatingSingleBlock),
-  new Platform(2424, 261, 34, 64, floatingSingleBlock),
-  new Platform(2552, 453, 34, 64, floatingSingleBlock),
-  new Platform(2680, 325, 34, 64, floatingSingleBlock),
+  new Platform(2296, 325, 64, 64, floatingSingleBlock),
+  new Platform(2424, 261, 64, 64, floatingSingleBlock),
+  new Platform(2552, 453, 64, 64, floatingSingleBlock),
+  new Platform(2680, 325, 64, 64, floatingSingleBlock),
   new Platform(2808, 453, 444, 128, highPlatformBig),
-  new Platform(3316, 325, 34, 64, floatingSingleBlock),
-  new Platform(3444, 133, 34, 64, floatingSingleBlock),
+  new Platform(3316, 325, 64, 64, floatingSingleBlock),
+  new Platform(3444, 133, 64, 64, floatingSingleBlock),
   new Platform(3732, 453, 192, 64, floatingPlatform),
-  new Platform(3850, 382, 64, 64, door),
+  new Platform(3924, 453, 444, 128, highPlatformBig),
+  new Platform(4496, 453, 444, 128, highPlatformBig),
+  new Platform(5068, 325, 64, 64, floatingSingleBlock),
+  new Platform(5196, 197, 64, 64, floatingSingleBlock),
+  new Platform(5324, 325, 64, 64, floatingSingleBlock),
+  new Platform(5452, 453, 444, 128, highPlatformBig),
+  new Platform(6024, 453, 444, 128, highPlatformBig),
+  // new Platform(3850, 382, 64, 64, door),
 ];
 
 //monsters
@@ -346,6 +370,12 @@ let monsters = [
   new Monsters(2700, 330, 64, 64, monster1Image, 0, 2000),
   new Monsters(2900, 330, 64, 64, monster1Image, 0, 2000),
   new Monsters(3000, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(4000, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(4200, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(4500, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(4600, 330, 64, 64, monster1Image, 0, 2000),
+  new Monsters(4800, 330, 64, 64, monster1Image, 0, 2000),
+
 ];
 
 //coins
@@ -366,6 +396,16 @@ let coin = [
 
 let totalCoins = new Coins(10, 15, 25, 25, coinsImage);
 
+//chests
+const chestImg = createImage("/img/level 1 img/chest_closed.png");
+const batmanImg = createImage("/img/level 1 img/batman.png")
+
+let chests = [
+  new Chests(6400, 407, 64, 64, chestImg),
+];
+
+let batman = new Chests(-256,407, 64, 64, batmanImg)
+
 //reset function for when you die
 function reset() {
   player = new Player(
@@ -375,7 +415,7 @@ function reset() {
     },
     knightImg
   );
-  score = -1;
+  score = 0;
   //reset function
   bigPlatforms = [
     new Platform(-192, 453, 444, 128, floatingSingleBlock),
@@ -384,17 +424,29 @@ function reset() {
     new Platform(1344, 389, 327, 192, higherPlatformSmall),
     new Platform(1153, 453, 319, 128, highPlatformSmall),
     new Platform(1724, 453, 444, 128, highPlatformBig),
-    new Platform(2296, 325, 34, 64, floatingSingleBlock),
-    new Platform(2424, 261, 34, 64, floatingSingleBlock),
-    new Platform(2552, 453, 34, 64, floatingSingleBlock),
-    new Platform(2680, 325, 34, 64, floatingSingleBlock),
+    new Platform(2296, 325, 64, 64, floatingSingleBlock),
+    new Platform(2424, 261, 64, 64, floatingSingleBlock),
+    new Platform(2552, 453, 64, 64, floatingSingleBlock),
+    new Platform(2680, 325, 64, 64, floatingSingleBlock),
     new Platform(2808, 453, 444, 128, highPlatformBig),
-    new Platform(3316, 325, 34, 64, floatingSingleBlock),
-    new Platform(3444, 133, 34, 64, floatingSingleBlock),
-    new Platform(3668, 453, 192, 64, floatingPlatform),
-    new Platform(3722, 382, 64, 64, door),
+    new Platform(3316, 325, 64, 64, floatingSingleBlock),
+    new Platform(3444, 133, 64, 64, floatingSingleBlock),
+    new Platform(3732, 453, 192, 64, floatingPlatform),
+    new Platform(3924, 453, 444, 128, highPlatformBig),
+    new Platform(4496, 453, 444, 128, highPlatformBig),
+    new Platform(5068, 325, 64, 64, floatingSingleBlock),
+    new Platform(5196, 197, 64, 64, floatingSingleBlock),
+    new Platform(5324, 325, 64, 64, floatingSingleBlock),
+    new Platform(5452, 453, 444, 128, highPlatformBig),
+    new Platform(6024, 453, 444, 128, highPlatformBig),
   ];
   //reset function
+  chests = [
+    new Chests(6400, 407, 64, 64, chestImg),
+  ];
+
+  batman = new Chests(-256,407, 64, 64, batmanImg)
+
   clouds = [
     new Objects(getRandomInt(0, 3778), getRandomInt(0, 200), 3778, 308, cloud1),
     new Objects(getRandomInt(0, 3778), getRandomInt(0, 200), 3778, 308, cloud2),
@@ -478,6 +530,7 @@ function reset() {
   ];
   //reset function
   monsters = [
+    new Monsters(600, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(900, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(1200, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(1500, 330, 64, 64, monster1Image, 0, 2000),
@@ -485,21 +538,32 @@ function reset() {
     new Monsters(2100, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(2300, 330, 64, 64, monster1Image, 0, 2000),
     new Monsters(2700, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(2900, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(3000, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(4000, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(4200, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(4500, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(4600, 330, 64, 64, monster1Image, 0, 2000),
+    new Monsters(4800, 330, 64, 64, monster1Image, 0, 2000),
   ];
-
+  //reset function
   coin = [
     new Coins(120, 415, 25, 25, coinsImage),
     new Coins(140, 415, 25, 25, coinsImage),
     new Coins(160, 415, 25, 25, coinsImage),
-    new Coins(803, 415, 25, 25, coinsImage),
-    new Coins(823, 415, 25, 25, coinsImage),
-    new Coins(843, 415, 25, 25, coinsImage),
+    new Coins(795, 415, 25, 25, coinsImage),
+    new Coins(815, 415, 25, 25, coinsImage),
+    new Coins(833, 415, 25, 25, coinsImage),
     new Coins(2689, 266, 25, 25, coinsImage),
     new Coins(3030, 415, 25, 25, coinsImage),
     new Coins(3050, 415, 25, 25, coinsImage),
     new Coins(3070, 415, 25, 25, coinsImage),
-    new Coins(0, 0, 25, 25, coinsImage),
+    new Coins(4030, 415, 25, 25, coinsImage),
+    new Coins(4050, 415, 25, 25, coinsImage),
+    new Coins(4070, 415, 25, 25, coinsImage),
   ];
+  //reset function
+  totalCoins = new Coins(10, 15, 25, 25, coinsImage);
 
   BgLayers = [
     new StartBg(-1017, -302, 1028, 0, bg10, -517, -250, 0.1),
@@ -527,7 +591,7 @@ function reset() {
     new StartBg(-2034, -302, 1028, 0, bg1, -517, -250, 0.1),
     new StartBg(-2034, -302, 1028, 0, bg8, -517, -250, 0.2),
   ];
-  totalCoins = new Coins(10, 15, 25, 25, coinsImage);
+  // totalCoins = new Coins(10, 15, 25, 25, coinsImage);
 
   scrollOfset = 0;
   //reset function finished
@@ -559,11 +623,12 @@ let coins = 1;
 
 //animate function
 function animate() {
+  cancelAnimationFrame(animateId);
   animateId = window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   BgLayers.forEach((layer) => {
-    if (layer.x > canvas.width / 2) {
+    if (layer.x > 300) {
       layer.x = -1017;
     }
 
@@ -572,10 +637,16 @@ function animate() {
   });
 
   //score
-  ctx.font = "15px serif";
+  ctx.font = "15px VT323";
   ctx.fillStyle = "white";
   ctx.fillText(score, 37, 33);
 
+  //chests
+  chests.forEach((chest) => {
+    chest.draw();
+  });
+
+  batman.draw()
   //clouds
   clouds.forEach((cloudImg) => {
     cloudImg.draw();
@@ -780,7 +851,7 @@ function animate() {
 
     //moving background
     if (keys.d.pressed || keys.arrowRight.pressed) {
-      scrollOfset += 2;
+      // scrollOfset += 2;
 
       monsters.forEach((monster) => {
         monster.position.x -= 2;
@@ -793,6 +864,13 @@ function animate() {
       coin.forEach((coin) => {
         coin.position.x -= 2;
       });
+
+      chests.forEach((chest) => {
+        chest.position.x -= 2;
+      });
+
+      batman.position.x -= 2
+
     } else if (keys.a.pressed || keys.arrowLeft.pressed) {
       scrollOfset -= 2;
 
@@ -807,23 +885,48 @@ function animate() {
       coin.forEach((coin) => {
         coin.position.x += 2;
       });
+      chests.forEach((chest) => {
+        chest.position.x += 2;
+      });
+
+      batman.position.x += 2
     }
 
+    let winText1 = "YOU WIN!!";
+    let winText2 = "to be continued";
+
     //win scenario
-    if (scrollOfset > 2000) {
-      console.log("you win");
-    }
+    chests.forEach((chest) => {
+      if (player.position.x >= chest.position.x && attack) {
+
+        cancelAnimationFrame(animateId);
+        ctx.font = "50px VT323";
+        ctx.fillStyle = "white";
+        ctx.fillText(winText1, 430, 283);
+
+        ctx.font = "50px VT323";
+        ctx.fillStyle = "white";
+        ctx.fillText(winText2, 380, 380);
+
+      }
+    });
 
     //lose scenario
     if (player.position.y > canvas.height) {
       totalHearts -= 1;
       hearts.pop();
       reset();
-      console.log(totalHearts);
-      console.log("you loose");
     }
     if (totalHearts === 0) {
       gameOver = true;
+      cancelAnimationFrame(animateId);
+      gameOverFunction();
+      totalHearts = 3;
+      hearts = [
+        new Hearts(850, 10, 30, 30, heartImg),
+        new Hearts(900, 10, 30, 30, heartImg),
+        new Hearts(950, 10, 30, 30, heartImg),
+      ];
     }
   }
 
@@ -840,7 +943,7 @@ function animate() {
     }
   });
 
-  //cheks for collision and player dies
+  //checks for collision and player dies
   monsters.forEach((monster) => {
     if (
       monster.position.x < player.position.x + player.width - 70 &&
@@ -851,6 +954,17 @@ function animate() {
       totalHearts -= 1;
       hearts.pop();
       reset();
+      if (totalHearts === 0) {
+        gameOver = true;
+        cancelAnimationFrame(animateId);
+        gameOverFunction();
+        totalHearts = 3;
+        hearts = [
+          new Hearts(850, 10, 30, 30, heartImg),
+          new Hearts(900, 10, 30, 30, heartImg),
+          new Hearts(950, 10, 30, 30, heartImg),
+        ];
+      }
     }
   });
 
@@ -875,7 +989,6 @@ function animate() {
       singleCoin.position.y < player.position.y + player.height &&
       singleCoin.height + singleCoin.position.y > player.position.y
     ) {
-      console.log("coins");
       score++;
       coin.splice(index, 1);
     }
@@ -884,7 +997,6 @@ function animate() {
 
 //movement tracker
 window.addEventListener("keydown", (event) => {
-  // console.log(event)
   switch (event.key) {
     case "d": //right
       keys.d.pressed = true;
@@ -1051,26 +1163,26 @@ let BgLayers = [
   new StartBg(-2034, -302, 1028, 0, bg8, -517, -250, 0.2),
 ];
 
-class ChoosePlayer {
-  constructor(x, y, image, ctx) {
-    this.position = {
-      x,
-      y,
-    };
-    this.height = 64;
-    this.width = 64;
-    this.image = image;
-    this.ctx = ctx;
-  }
-  //draw player
-  draw() {
-    this.ctx.drawImage(this.image, this.position.x, this.position.y);
-  }
+// class ChoosePlayer {
+//   constructor(x, y, image, ctx) {
+//     this.position = {
+//       x,
+//       y,
+//     };
+//     this.height = 64;
+//     this.width = 64;
+//     this.image = image;
+//     this.ctx = ctx;
+//   }
+//   //draw player
+//   draw() {
+//     this.ctx.drawImage(this.image, this.position.x, this.position.y);
+//   }
 
-  update() {
-    this.draw();
-  }
-}
+//   update() {
+//     this.draw();
+//   }
+// }
 
 // let MageImg = createImage('/img/animations/mage/mage.png')
 // let RogueImg = createImage('/img/animations/rogue/rogueright.png')
@@ -1148,6 +1260,27 @@ class ChoosePlayer {
 //   RogueImg.src = "/img/animations/rogue/idle/idleright" + rogueImg + ".png";
 // }
 
+function gameOverFunction() {
+  cancelAnimationFrame(animateId);
+  animateId = window.requestAnimationFrame(gameOverFunction);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  BgLayers.forEach((layer) => {
+    if (layer.x > canvas.width / 2) {
+      layer.x = -1017;
+    }
+
+    layer.draw();
+    layer.update();
+  });
+
+  ctx.font = "50px VT323";
+  ctx.fillStyle = "white";
+  ctx.fillText(gameOverText, 410, 283);
+}
+
+let startText = "START GAME";
+
 function animateStart() {
   animateId = window.requestAnimationFrame(animateStart);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1160,6 +1293,10 @@ function animateStart() {
     layer.draw();
     layer.update();
   });
+
+  ctx.font = "50px VT323";
+  ctx.fillStyle = "white";
+  ctx.fillText(startText, 410, 283);
 }
 
 window.onload = () => {
@@ -1173,6 +1310,7 @@ window.onload = () => {
   startGameBtn.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     cancelAnimationFrame(animateId);
+    reset()
     animate();
   });
 };
