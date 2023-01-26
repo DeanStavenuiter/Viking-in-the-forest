@@ -1163,6 +1163,63 @@ let BgLayers = [
   new StartBg(-2034, -302, 1028, 0, bg8, -517, -250, 0.2),
 ];
 
+
+function gameOverFunction() {
+  cancelAnimationFrame(animateId);
+  animateId = window.requestAnimationFrame(gameOverFunction);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  BgLayers.forEach((layer) => {
+    if (layer.x > canvas.width / 2) {
+      layer.x = -1017;
+    }
+
+    layer.draw();
+    layer.update();
+  });
+
+  ctx.font = "50px VT323";
+  ctx.fillStyle = "white";
+  ctx.fillText(gameOverText, 410, 283);
+}
+
+let startText = "START GAME";
+
+function animateStart() {
+  animateId = window.requestAnimationFrame(animateStart);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  BgLayers.forEach((layer) => {
+    if (layer.x > canvas.width / 2) {
+      layer.x = -1017;
+    }
+
+    layer.draw();
+    layer.update();
+  });
+
+  ctx.font = "50px VT323";
+  ctx.fillStyle = "white";
+  ctx.fillText(startText, 410, 283);
+}
+
+window.onload = () => {
+  animateStart();
+
+  // animateKnight();
+  // animateMage();
+  // animateRogue();
+
+  const startGameBtn = document.querySelector(".pixel2");
+  startGameBtn.addEventListener("click", () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    cancelAnimationFrame(animateId);
+    reset()
+    animate();
+  });
+};
+
+
 // class ChoosePlayer {
 //   constructor(x, y, image, ctx) {
 //     this.position = {
@@ -1259,58 +1316,3 @@ let BgLayers = [
 //   }
 //   RogueImg.src = "/img/animations/rogue/idle/idleright" + rogueImg + ".png";
 // }
-
-function gameOverFunction() {
-  cancelAnimationFrame(animateId);
-  animateId = window.requestAnimationFrame(gameOverFunction);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  BgLayers.forEach((layer) => {
-    if (layer.x > canvas.width / 2) {
-      layer.x = -1017;
-    }
-
-    layer.draw();
-    layer.update();
-  });
-
-  ctx.font = "50px VT323";
-  ctx.fillStyle = "white";
-  ctx.fillText(gameOverText, 410, 283);
-}
-
-let startText = "START GAME";
-
-function animateStart() {
-  animateId = window.requestAnimationFrame(animateStart);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  BgLayers.forEach((layer) => {
-    if (layer.x > canvas.width / 2) {
-      layer.x = -1017;
-    }
-
-    layer.draw();
-    layer.update();
-  });
-
-  ctx.font = "50px VT323";
-  ctx.fillStyle = "white";
-  ctx.fillText(startText, 410, 283);
-}
-
-window.onload = () => {
-  animateStart();
-
-  // animateKnight();
-  // animateMage();
-  // animateRogue();
-
-  const startGameBtn = document.querySelector(".pixel2");
-  startGameBtn.addEventListener("click", () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    cancelAnimationFrame(animateId);
-    reset()
-    animate();
-  });
-};
