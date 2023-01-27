@@ -615,8 +615,12 @@ function animate() {
   cancelAnimationFrame(animateId);
   animateId = window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  forestAudio.play();
-  forestAudio.loop;
+
+  setTimeout(() => {
+    forestAudio.play();
+    forestAudio.loop;
+  }, 1000);
+ 
 
   BgLayers.forEach((layer) => {
     if (layer.x > 300) {
