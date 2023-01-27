@@ -617,11 +617,10 @@ function animate() {
   animateId = window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  setTimeout(() => {
+  document.querySelector(".sounds").addEventListener("click", () => {
     forestAudio.play();
     forestAudio.loop;
-  }, 3500);
- 
+  });
 
   BgLayers.forEach((layer) => {
     if (layer.x > 300) {
