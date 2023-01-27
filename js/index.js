@@ -12,6 +12,7 @@ stepsAudio.volume = 0.1;
 const forestAudio = new Audio("/sounds/forest.wav");
 forestAudio.volume = 0.2;
 const attackAudio = new Audio("/sounds/attack.wav");
+
 //keys
 const keys = {
   d: {
@@ -619,7 +620,7 @@ function animate() {
   setTimeout(() => {
     forestAudio.play();
     forestAudio.loop;
-  }, 1000);
+  }, 3500);
  
 
   BgLayers.forEach((layer) => {
