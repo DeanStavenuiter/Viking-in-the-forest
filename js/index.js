@@ -7,6 +7,11 @@ let animateId;
 let score = 0;
 let gameOverText = "GAME OVER";
 
+const stepsAudio = new Audio("/sounds/steps.wav");
+stepsAudio.volume = 0.1;
+const forestAudio = new Audio("/sounds/forest.wav");
+forestAudio.volume = 0.2;
+const attackAudio = new Audio("/sounds/attack.wav");
 //keys
 const keys = {
   d: {
@@ -44,24 +49,6 @@ function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
-}
-
-//background class
-class Background {
-  constructor({ position, imgSrc }) {
-    this.position = position;
-    this.img = new Image();
-    this.img.src = imgSrc;
-  }
-
-  draw() {
-    if (!this.img) return;
-    ctx.drawImage(this.img, this.position.x, this.position.y);
-  }
-
-  update() {
-    this.draw();
-  }
 }
 
 //hearts class
@@ -111,7 +98,7 @@ class Player {
   }
 }
 
-// platform
+// platform class
 class Platform {
   constructor(x, y, width, height, image) {
     this.position = {
@@ -195,6 +182,7 @@ class Monsters {
     }
   }
 }
+
 // coin class
 class Coins {
   constructor(x, y, width, height, image) {
@@ -270,7 +258,9 @@ let imgChar = 1;
 const highPlatformBig = createImage("images/level 1 img/highBigPlatform.png");
 
 //high platform small
-const highPlatformSmall = createImage("images/level 1 img/highSmallPlatform.png");
+const highPlatformSmall = createImage(
+  "images/level 1 img/highSmallPlatform.png"
+);
 
 //higher platform small
 const higherPlatformSmall = createImage(
@@ -278,7 +268,9 @@ const higherPlatformSmall = createImage(
 );
 
 //floating platform
-const floatingPlatform = createImage("images/level 1 img/floating-platform.png");
+const floatingPlatform = createImage(
+  "images/level 1 img/floating-platform.png"
+);
 
 //floating single block
 const floatingSingleBlock = createImage(
@@ -357,7 +349,9 @@ let bigPlatforms = [
 ];
 
 //monsters
-const monster1Image = createImage("images/animations/monster1/monsterleft1.png");
+const monster1Image = createImage(
+  "images/animations/monster1/monsterleft1.png"
+);
 
 let monsters = [
   new Monsters(600, 330, 64, 64, monster1Image, 0, 2000),
@@ -621,6 +615,8 @@ function animate() {
   cancelAnimationFrame(animateId);
   animateId = window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  forestAudio.play();
+  forestAudio.loop;
 
   BgLayers.forEach((layer) => {
     if (layer.x > 300) {
@@ -737,7 +733,8 @@ function animate() {
         idleLeft = 1;
       }
     }
-    knightImg.src = "images/animations/knight/idle/idleleft" + idleLeft + ".png";
+    knightImg.src =
+      "images/animations/knight/idle/idleleft" + idleLeft + ".png";
   }
 
   //run right
@@ -752,7 +749,8 @@ function animate() {
         runRight = 1;
       }
     }
-    knightImg.src = "images/animations/knight/walk/walkright" + runRight + ".png";
+    knightImg.src =
+      "images/animations/knight/walk/walkright" + runRight + ".png";
   }
 
   //run left
@@ -800,7 +798,8 @@ function animate() {
         jumpLeft = 1;
       }
     }
-    knightImg.src = "images/animations/knight/jump/jumpleft" + jumpLeft + ".png";
+    knightImg.src =
+      "images/animations/knight/jump/jumpleft" + jumpLeft + ".png";
   }
 
   //attack left
@@ -991,6 +990,8 @@ function animate() {
 window.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "d": //right
+      stepsAudio.play();
+      stepsAudio.loop = true;
       keys.d.pressed = true;
       isMovingRight = true;
       isNotMoving = false;
@@ -1032,6 +1033,8 @@ window.addEventListener("keydown", (event) => {
       break;
     case " ": //attack
       attack = true;
+      attackAudio.play();
+      attackAudio.loop = true;
       keys.Space.pressed = true;
       break;
   }
@@ -1044,6 +1047,7 @@ window.addEventListener("keyup", (event) => {
 
   switch (event.key) {
     case "d": //right
+      stepsAudio.loop = false;
       keys.d.pressed = false;
       isMovingRight = false;
       wasRight = true;
@@ -1075,6 +1079,7 @@ window.addEventListener("keyup", (event) => {
       keys.arrowUp.pressed = false;
       isMovingUp = false;
     case " ": //attack
+      attackAudio.loop = false;
       attack = false;
       keys.Space.pressed = false;
       break;
